@@ -15,9 +15,9 @@ public class Student {
 
     @Override
     public String toString() {
-        return  "name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", Age=" + age
+        return  "name:'" + name + '\'' +
+                ", lastName:'" + lastName + '\'' +
+                ", Age:" + age
               ;
     }
 

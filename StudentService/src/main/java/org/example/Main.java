@@ -39,10 +39,10 @@ public class Main {
         Student student1 = convert.convertToStudent(studentDTO1);
         Student student2 = convert.convertToStudent(studentDTO2);
         Student student3 = convert.convertToStudent(studentDTO3);
-        System.out.println(student1);
         CacheListStudents.addStudent(student1);
         CacheListStudents.addStudent(student2);
         CacheListStudents.addStudent(student3);
+        System.out.println();
         UniversityServise university = new UniversityServiseImpl();
         university.study();
     }
