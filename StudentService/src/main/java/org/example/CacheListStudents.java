@@ -1,5 +1,6 @@
 package org.example;
 
+import lombok.Getter;
 import org.example.data.Student;
 
 import java.util.ArrayList;
@@ -13,6 +14,9 @@ public class CacheListStudents {
         System.out.println("Студент "+ student + " добавлен");
     }
 
+    public static List<Student> getStudents() {
+        return List.copyOf(students) ;
+    }
 
 
 }
