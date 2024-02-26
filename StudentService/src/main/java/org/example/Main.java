@@ -1,22 +1,19 @@
 package org.example;
 
 import org.example.data.Student;
+import org.example.service.Uni;
 import org.example.service.cashService.StudentsMap;
-
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
 
 public class Main {
     public static void main(String[] args) {
 //        // Дата в строковом формате
 //        String dateString = "29-04-1993";
-//
+//e
 //        // Форматтер для преобразования строки в LocalDate
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 //
-//        // Преобразование строки в LocalDate
-//        LocalDate birthDate = LocalDate.parse(dateString, formatter);
+//        // Преобразование строки в LocalDated
+//        LocalDate birthDate = LocalDate.parse(dateString, formatter);e
 //
 //        // Текущая дата
 //        LocalDate currentDate = LocalDate.now();
