@@ -1,41 +1,16 @@
 package org.example.component;
 
+import org.example.service.dmlService.DMLService;
+import org.example.service.dmlService.impl.PostgreDML;
 import org.postgresql.PGProperty;
 
 import java.sql.*;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 public class PG {
 
-    private static Connection getInstance() throws SQLException {
-        String url = "jdbc:postgresql://localhost:5432/postgres";
-        Properties props = new Properties();
-        PGProperty.USER.set(props, "postgres");
-        PGProperty.PASSWORD.set(props, "admin");
-        PGProperty.ASSUME_MIN_SERVER_VERSION.set(props, "10");
-        PGProperty.REPLICATION.set(props, "database");
-        PGProperty.PREFER_QUERY_MODE.set(props, "simple");
-        var con = DriverManager.getConnection(url, props);
-
-        return con;
-    }
-
-
-    private static void exmaple() {
-        try (Connection connection = getInstance();
-             Statement statement = connection.createStatement()){
-
-
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM student");
-            while (resultSet.next()) {
-                // Обработка результатов, например:
-                System.out.println(resultSet.getString("name"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
+    private static Logger logger = Logger.getLogger(PG.class.getName());
 
  /*   INSERT - Вставка данных в таблицу:
 
@@ -100,7 +75,11 @@ try {
 
 
     public static void main(String[] args) {
-        exmaple();
+
+        DMLService dmlService = new PostgreDML();
+
+        var result = dmlService.getAllAge();
+        logger.info("result: " + result);
     }
 
 }
