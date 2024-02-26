@@ -1,6 +1,5 @@
-package org.example;
+package org.example.component;
 
-import org.postgresql.PGConnection;
 import org.postgresql.PGProperty;
 
 import java.sql.*;
@@ -17,7 +16,6 @@ public class PG {
         PGProperty.REPLICATION.set(props, "database");
         PGProperty.PREFER_QUERY_MODE.set(props, "simple");
         var con = DriverManager.getConnection(url, props);
-
 
         return con;
     }
