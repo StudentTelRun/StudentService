@@ -1,5 +1,6 @@
-package org.example.component;
+package org.example.component.dbConnection.impl;
 
+import org.example.component.dbConnection.DBConnection;
 import org.postgresql.PGProperty;
 
 import java.sql.Connection;
@@ -9,16 +10,8 @@ import java.util.Properties;
 
 
 //TODO добавить абстрацию
-public enum DatabaseConnection {
+public enum PGConnection implements DBConnection {
     INSTANCE;
-
-    private static Connection getSQLiteInstance() throws SQLException {
-        //url тут просто ссылка на файл а не адрес в сети, аутеникфикация не поддерживается этой базой
-        String url = "jdbc:sqlite:src/main/resources/db/student.db";
-        var con = DriverManager.getConnection(url);
-
-        return con;
-    }
 
     private static Connection getPGInstance() throws SQLException {
         String url = "jdbc:postgresql://localhost:5432/postgres";
@@ -34,23 +27,12 @@ public enum DatabaseConnection {
     }
 
     //TODO переделать на дженеричный вариант
-    public Connection getPGConnection() throws SQLException {
+    @Override
+    public Connection getDBConnection() {
         try {
-            return this.getPGInstance();
+            return getPGInstance();
         } catch (SQLException e) {
             throw  new RuntimeException(e);
         }
     }
-
-
-    //тут тоже самое что и в предыдущем методе только порлучаем базу лайт
-    public Connection getSQLiteConnection() throws SQLException {
-        try {
-            return this.getSQLiteInstance();
-        } catch (SQLException e) {
-            throw  new RuntimeException(e);
-        }
-    }
-
-
 }

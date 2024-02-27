@@ -1,15 +1,12 @@
 package org.example;
 
-import org.example.component.DatabaseConnection;
-import org.example.data.Student;
-import org.example.service.Uni;
-import org.example.service.cashService.StudentsMap;
-import org.example.service.dmlService.impl.PostgreDML;
+import org.example.component.dbConnection.impl.SQLiteConnection;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Logger;
-
-import static java.util.logging.Level.INFO;
 
 public class Main {
 
@@ -43,16 +40,14 @@ public class Main {
         uni.study();*/
 
         //пример того как не правильно генерит AI
-        try (var sqlIiteConnection = DatabaseConnection.INSTANCE.getSQLiteConnection();
-             var statement = sqlIiteConnection.createStatement()) {
-            var result = statement.executeQuery("SELECT * FROM student");
+        try (Connection sqlIiteConnection = SQLiteConnection.INSTANCE.getDBConnection();
+             Statement statement = sqlIiteConnection.createStatement()) {
+            ResultSet result = statement.executeQuery("SELECT * FROM student");
             while (result.next()) {
                 logger.info("Name from select %s".formatted(result.getString("name")));
             }
         }
         //все работает задание запустить код.
         //и проверить что работаее
-
-
     }
 }

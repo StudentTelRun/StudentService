@@ -1,6 +1,6 @@
 package org.example.service.dmlService.impl;
 
-import org.example.component.DatabaseConnection;
+import org.example.component.dbConnection.impl.PGConnection;
 import org.example.service.dmlService.DMLService;
 
 import java.sql.Connection;
@@ -20,7 +20,7 @@ public class PostgreDML implements DMLService {
 
     @Override
     public List<Integer> getAllAge() {
-        try (Connection con = DatabaseConnection.INSTANCE.getPGConnection();
+        try (Connection con = PGConnection.INSTANCE.getDBConnection();
              ResultSet resultSet = getResultSet(con)) {
             List<Integer> ages = new ArrayList<>();
 
