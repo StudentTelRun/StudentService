@@ -8,13 +8,13 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 
-//TODO добавить абстрацию
+//TODO добавить абстракцию
 public enum DatabaseConnection {
     INSTANCE;
 
     private static Connection getSQLiteInstance() throws SQLException {
-        //url тут просто ссылка на файл а не адрес в сети, аутеникфикация не поддерживается этой базой
-        String url = "jdbc:sqlite:src/main/resources/db/student.db";
+        //url тут просто ссылка на файл, а не адрес в сети, аутентификация не поддерживается этой базой
+        String url = "jdbc:sqlite:StudentService/src/main/resources/db/student.db";
         var con = DriverManager.getConnection(url);
 
         return con;
@@ -43,7 +43,7 @@ public enum DatabaseConnection {
     }
 
 
-    //тут тоже самое что и в предыдущем методе только порлучаем базу лайт
+    //тут тоже самое что и в предыдущем методе только получаем базу лайт
     public Connection getSQLiteConnection() throws SQLException {
         try {
             return this.getSQLiteInstance();
