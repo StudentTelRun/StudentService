@@ -8,7 +8,9 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
-public class specificStudConvertor implements StudentConverter {
+
+// TODO Add Convertor
+public class SpecificStudConvertor implements StudentConverter {
     public Student convertToStudent(StudentDto studentDto) {
         Student student = new Student();
         student.setName(studentDto.getName());
@@ -21,4 +23,5 @@ public class specificStudConvertor implements StudentConverter {
         student.setAge(period.getYears());
         return student;
     }
+
 }

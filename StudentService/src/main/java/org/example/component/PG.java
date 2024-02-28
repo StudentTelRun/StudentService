@@ -1,11 +1,7 @@
 package org.example.component;
 
 import org.example.service.dmlService.DMLService;
-import org.example.service.dmlService.impl.PostgreDML;
-import org.postgresql.PGProperty;
 
-import java.sql.*;
-import java.util.Properties;
 import java.util.logging.Logger;
 
 public class PG {
@@ -76,10 +72,6 @@ try {
 
     public static void main(String[] args) {
 
-        DMLService dmlService = new PostgreDML();
-
-        var result = dmlService.getAllAge();
-        logger.info("result: " + result);
     }
 
 }
