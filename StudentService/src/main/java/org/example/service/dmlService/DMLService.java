@@ -10,13 +10,17 @@ public interface DMLService {
 
     /**
      * This function return all ages from table Student
-     *
      * @param connection to our database
      * @return List<Integer>
      */
-    public List<Integer> getAllAge(Connection connection) throws SQLException; // TODO remove exceptions and move to impl
+    public List<Integer> getAllAge(Connection connection);
 
-    public List<Student> getAllStudents(Connection connection) throws SQLException;// TODO remove exceptions and move to impl
+    /**
+     * This method returns List of Student from database
+     * @param connection Connection to SQL database
+     * @return List<Student>
+     */
+    public List<Student> getAllStudents(Connection connection);
 
     public String[] getAllNames();
 

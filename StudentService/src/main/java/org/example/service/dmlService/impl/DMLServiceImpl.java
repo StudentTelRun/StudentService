@@ -1,8 +1,9 @@
 package org.example.service.dmlService.impl;
 
-import org.example.component.DatabaseConnection;
 import org.example.data.Student;
+import org.example.service.StudentConverter;
 import org.example.service.dmlService.DMLService;
+import org.example.service.impl.SpecificStudConvertor;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,54 +15,36 @@ import java.util.List;
 public class DMLServiceImpl implements DMLService {
     public ResultSet getResultSet(Connection connection) throws SQLException {
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM student");
 
-        return resultSet;
+        return statement.executeQuery("SELECT * FROM student");
     }
 
     @Override
-    public List<Integer> getAllAge(Connection connection) throws SQLException {
-
-        ResultSet resultSet = getResultSet(connection);
-        List<Integer> ages = new ArrayList<>();
-
-        while (resultSet.next()) {
-            // Обработка результатов, например:
-            String age = resultSet.getString("age");
-            Integer ageInt = Integer.parseInt(age);
-            ages.add(ageInt);
-        }
-
-        return ages;
-
-    }
-
-    @Override
-    public List<Student> getAllStudents(Connection connection) throws SQLException {
-        ResultSet resultSet = getResultSet(connection);
-        List<Student> students = new ArrayList<>();
-        var metaData = resultSet.getMetaData();
-        int columnCount = metaData.getColumnCount();
-
-        // TODO Create convertor to Students (example: specificStudentconvertor
-        while (resultSet.next()) {
-            Student student = new Student();
-            for (int i = 1; i <= columnCount; i++) {
-                String columnName = metaData.getColumnName(i);
-
-                if ("name".equals(columnName)) {
-                    student.setName((String) resultSet.getObject(i));
-                } else if ("secondName".equals(columnName)) {
-                    student.setSecondName((String) resultSet.getObject(i));
-                } else if ("age".equals(columnName)) {
-                    student.setAge((Integer) resultSet.getObject(i));
-                } else {
-                    System.out.println("Undefined field: " + columnName);
-                }
+    public List<Integer> getAllAge(Connection connection) {
+        try {
+            ResultSet resultSet = getResultSet(connection);
+            List<Integer> ages = new ArrayList<>();
+            while (resultSet.next()) {
+                String age = resultSet.getString("age");
+                Integer ageInt = Integer.parseInt(age);
+                ages.add(ageInt);
             }
-            students.add(student);
+            return ages;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return students;
+    }
+
+    @Override
+    public List<Student> getAllStudents(Connection connection) {
+        StudentConverter studentConverter = new SpecificStudConvertor();
+        try {
+            ResultSet resultSet = getResultSet(connection);
+
+            return studentConverter.convertResultSetToStudents(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
