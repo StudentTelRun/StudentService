@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.component.DatabaseConnection;
+import org.example.component.dbConnection.impl.SQLiteConnection;
 import org.example.data.Student;
 import org.example.service.dmlService.DMLService;
 import org.example.service.dmlService.impl.DMLServiceImpl;
@@ -53,7 +53,7 @@ public class Main {
         //и проверить что работаее
 
         DMLService dmlService = new DMLServiceImpl();
-        try (Connection connection = DatabaseConnection.INSTANCE.getSQLiteConnection()){
+        try (Connection connection = SQLiteConnection.INSTANCE.getDBConnection()){
             List<Student> allStudents = dmlService.getAllStudents(connection);
             allStudents.forEach(System.out::println);
 
