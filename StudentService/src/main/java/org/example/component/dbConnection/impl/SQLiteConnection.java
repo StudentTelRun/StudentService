@@ -10,7 +10,7 @@ public enum SQLiteConnection implements DBConnection {
     INSTANCE;
 
     private static Connection getSQLiteInstance() throws SQLException {
-        String url = "jdbc:sqlite:/Users/alex/IdeaProjects/StudentService/StudentService/src/main/resources/db/student.db";
+        String url = "jdbc:sqlite:StudentService/src/main/resources/db/student.db";
         var con = DriverManager.getConnection(url);
 
         return con;

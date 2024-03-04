@@ -48,12 +48,34 @@ public class DMLServiceImpl implements DMLService {
     }
 
     @Override
-    public String[] getAllNames() {
-        return new String[0];
+    public List<String> getAllNames(Connection connection) {
+        try {
+            ResultSet resultSet = getResultSet(connection);
+            List<String> names = new ArrayList<>();
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                names.add(name);
+            }
+
+            return names;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public String[] getAllSecondNames() {
-        return new String[0];
+    public List<String> getAllSecondNames(Connection connection) {
+        try {
+            ResultSet resultSet = getResultSet(connection);
+            List<String> secondNames = new ArrayList<>();
+            while (resultSet.next()) {
+                String secondName = resultSet.getString("secondName");
+                secondNames.add(secondName);
+            }
+
+            return secondNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

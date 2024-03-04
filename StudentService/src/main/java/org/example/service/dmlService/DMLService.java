@@ -3,7 +3,6 @@ package org.example.service.dmlService;
 import org.example.data.Student;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
 public interface DMLService {
@@ -21,10 +20,14 @@ public interface DMLService {
      * @return List<Student>
      */
     public List<Student> getAllStudents(Connection connection);
+    /**
+     * This method returns List of Student names from database
+     * @param connection Connection to SQL database
+     * @return List<String>
+     */
+    public List<String> getAllNames(Connection connection);
 
-    public String[] getAllNames();
-
-    public String[] getAllSecondNames();
+    public List<String> getAllSecondNames(Connection connection);
 
     // .....
 }
