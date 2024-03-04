@@ -19,12 +19,14 @@ public class StudentsMap implements StudentsCash {
         }
         return INSTANCE;
     }
+
     public static Map<Integer, Student> getStudentsMap() {
         return Map.copyOf(STUDENTS_MAP);
     }
 
     private static Map<Integer, Student> STUDENTS_MAP = new HashMap<>();
     private static int COUNTER_ID = 1;
+
     @Override
     public void addStudent(Student student) {
         STUDENTS_MAP.put(COUNTER_ID++, student);
