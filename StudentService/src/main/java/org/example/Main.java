@@ -1,10 +1,12 @@
 package org.example;
 
+import org.example.component.dbConnection.impl.PGConnection;
 import org.example.component.dbConnection.impl.SQLiteConnection;
 import org.example.data.Student;
 import org.example.service.dmlService.DMLService;
 import org.example.service.dmlService.impl.DMLServiceImpl;
 
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -52,18 +54,26 @@ public class Main {
         //все работает задание запустить код.
         //и проверить что работаее
 //        PGConnection.getProperties("C:\\Users\\Cibermag\\IdeaProjects\\StudentService\\StudentService\\src\\main\\resources\\db.properties");
-        DMLService dmlService = new DMLServiceImpl();
-        try (Connection connection = SQLiteConnection.INSTANCE.getDBConnection()){
-            List<Student> allStudents = dmlService.getAllStudents(connection);
-            allStudents.forEach(System.out::println);
-            List<String> allnames = dmlService.getAllNames(connection);
-            allnames.forEach(System.out::println);
-            List<String> allsecondNames = dmlService.getAllSecondNames(connection);
-            allsecondNames.forEach(System.out::println);
+//        DMLService dmlService = new DMLServiceImpl();
+//        try (Connection connection = SQLiteConnection.INSTANCE.getDBConnection()){
+//            List<Student> allStudents = dmlService.getAllStudents(connection);
+//            allStudents.forEach(System.out::println);
+//            List<String> allnames = dmlService.getAllNames(connection);
+//            allnames.forEach(System.out::println);
+//            List<String> allsecondNames = dmlService.getAllSecondNames(connection);
+//            allsecondNames.forEach(System.out::println);
 //            List<Integer> result = dmlService.getAllAge(connection);
 //            result.forEach(a -> logger.info(String.valueOf(a)));
 //            result.forEach(System.out::println);
-        }
+//        }
 
+        DMLService dmlService = new DMLServiceImpl();
+        try (Connection connection = PGConnection.INSTANCE.getDBConnection()) {
+            List<Student> students = dmlService.getAllStudents(connection);
+            System.out.println(students);
+
+            List<Integer> ages = dmlService.getAllAge(connection);
+            System.out.println(ages);
+        }
     }
 }

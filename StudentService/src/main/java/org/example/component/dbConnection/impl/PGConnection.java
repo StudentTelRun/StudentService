@@ -14,22 +14,23 @@ public enum PGConnection implements DBConnection {
 
     private static Connection getPGInstance() throws SQLException {
         String url = "jdbc:postgresql://localhost:5432/postgres";
-        Properties props = new Properties();
+        String nameFile = "StudentService/src/main/resources/db.properties";
+        Properties props = getProperties(nameFile);
 //        PGProperty.USER.set(props, "postgres");
 //        PGProperty.PASSWORD.set(props, "admin");
 //        PGProperty.ASSUME_MIN_SERVER_VERSION.set(props, "10");
 //        PGProperty.REPLICATION.set(props, "database");
 //        PGProperty.PREFER_QUERY_MODE.set(props, "simple");
-        var con = DriverManager.getConnection(url, props);
+        var con = DriverManager.getConnection(url, getProperties(nameFile));
 
         return con;
     }
 
     // TODO: 04.03.2024 Проверить закрытие потока
-    //private static Properties getProperties(String namefile){
-    public static Properties getProperties(String namefile) {
+    //private static Properties getProperties(String nameFile){
+    private static Properties getProperties(String nameFile) {
         Properties properties = new Properties();
-        try (FileInputStream fileInputStream = new FileInputStream(namefile)) {
+        try (FileInputStream fileInputStream = new FileInputStream(nameFile)) {
             properties.load(fileInputStream);
         } catch (IOException e) {
             throw new RuntimeException(e);
