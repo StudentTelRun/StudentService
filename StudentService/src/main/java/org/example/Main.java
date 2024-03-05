@@ -67,6 +67,8 @@ public class Main {
 //            result.forEach(System.out::println);
 //        }
 
+        // Запустил Postgres в докере.
+        // Подсоединил к проекту
         DMLService dmlService = new DMLServiceImpl();
         try (Connection connection = PGConnection.INSTANCE.getDBConnection()) {
             List<Student> students = dmlService.getAllStudents(connection);
