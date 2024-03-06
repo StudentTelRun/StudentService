@@ -1,14 +1,13 @@
 package org.example.service.dmlService.impl;
 
+import org.example.component.dbConnection.impl.PGConnection;
+import org.example.component.dbConnection.impl.SQLiteConnection;
 import org.example.data.Student;
 import org.example.service.StudentConverter;
 import org.example.service.dmlService.DMLService;
 import org.example.service.impl.SpecificStudConvertor;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,6 +73,23 @@ public class DMLServiceImpl implements DMLService {
             }
 
             return secondNames;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void createStudentInDB(Student student) {
+        Connection connection = PGConnection.INSTANCE.getDBConnection();
+        try {
+            String insertQuery = "INSERT INTO student (name, second_name, age) VALUES (?, ?, ?)";
+            var prepareStatement = connection.prepareStatement(insertQuery);
+            prepareStatement.setString(1, student.getName());
+            prepareStatement.setString(2, student.getSecondName());
+            prepareStatement.setInt(3, student.getAge());
+
+            prepareStatement.executeUpdate();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

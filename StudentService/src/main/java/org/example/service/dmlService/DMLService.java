@@ -29,5 +29,6 @@ public interface DMLService {
 
     public List<String> getAllSecondNames(Connection connection);
 
-    // .....
+    public void createStudentInDB(Student student);
+
 }
