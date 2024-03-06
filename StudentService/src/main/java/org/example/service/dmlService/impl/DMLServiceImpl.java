@@ -80,7 +80,7 @@ public class DMLServiceImpl implements DMLService {
 
     @Override
     public void createStudentInDB(Student student) {
-        Connection connection = PGConnection.INSTANCE.getDBConnection();
+        Connection connection = SQLiteConnection.INSTANCE.getDBConnection();
         try {
             String insertQuery = "INSERT INTO student (name, second_name, age) VALUES (?, ?, ?)";
             var prepareStatement = connection.prepareStatement(insertQuery);

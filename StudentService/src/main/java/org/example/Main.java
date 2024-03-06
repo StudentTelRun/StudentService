@@ -66,7 +66,7 @@ public class Main {
 ////            result.forEach(System.out::println);
 //        }
 
-        Student student = new Student("Lisa", "L", 23);
+        Student student = new Student("Jack", "J", 115);
         dmlService.createStudentInDB(student);
 
     }
