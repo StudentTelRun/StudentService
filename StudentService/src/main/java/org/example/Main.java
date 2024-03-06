@@ -54,17 +54,20 @@ public class Main {
         //и проверить что работаее
 //        PGConnection.getProperties("C:\\Users\\Cibermag\\IdeaProjects\\StudentService\\StudentService\\src\\main\\resources\\db.properties");
         DMLService dmlService = new DMLServiceImpl();
-        try (Connection connection = PGConnection.INSTANCE.getDBConnection()){
-            List<Student> allStudents = dmlService.getAllStudents(connection);
-            allStudents.forEach(System.out::println);
-            List<String> allnames = dmlService.getAllNames(connection);
-            allnames.forEach(System.out::println);
-            List<String> allsecondNames = dmlService.getAllSecondNames(connection);
-            allsecondNames.forEach(System.out::println);
-//            List<Integer> result = dmlService.getAllAge(connection);
-//            result.forEach(a -> logger.info(String.valueOf(a)));
-//            result.forEach(System.out::println);
-        }
+//        try (Connection connection = PGConnection.INSTANCE.getDBConnection()){
+//            List<Student> allStudents = dmlService.getAllStudents(connection);
+//            allStudents.forEach(System.out::println);
+//            List<String> allnames = dmlService.getAllNames(connection);
+//            allnames.forEach(System.out::println);
+//            List<String> allsecondNames = dmlService.getAllSecondNames(connection);
+//            allsecondNames.forEach(System.out::println);
+////            List<Integer> result = dmlService.getAllAge(connection);
+////            result.forEach(a -> logger.info(String.valueOf(a)));
+////            result.forEach(System.out::println);
+//        }
+
+        Student student = new Student("Jack", "J", 115);
+        dmlService.createStudentInDB(student);
 
     }
 }
