@@ -1,14 +1,12 @@
 package org.example.service.dmlService.impl;
 
+import org.example.component.dbConnection.impl.SQLiteConnection;
 import org.example.data.Student;
 import org.example.service.StudentConverter;
 import org.example.service.dmlService.DMLService;
 import org.example.service.impl.SpecificStudConvertor;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,4 +76,17 @@ public class DMLServiceImpl implements DMLService {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void createStudent(Student student) throws SQLException {
+        Connection sqLiteConnection = SQLiteConnection.INSTANCE.getDBConnection();
+        String insertQuery = "INSERT INTO student (age, name, secondName) VALUES (?, ?, ?)";
+        PreparedStatement preparedStatement = sqLiteConnection.prepareStatement(insertQuery);
+        preparedStatement.setInt(1,student.getAge());
+        preparedStatement.setString(2,student.getName());
+        preparedStatement.setString(3,student.getSecondName());
+        int rez = preparedStatement.executeUpdate();
+        if ( rez == 1) System.out.println("добавлен новый студент " + student);
+    }
+
 }

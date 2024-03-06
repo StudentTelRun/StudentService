@@ -64,6 +64,8 @@ public class Main {
 //            result.forEach(a -> logger.info(String.valueOf(a)));
 //            result.forEach(System.out::println);
         }
+        Student student = new Student("Taras", "Shevchenko", 20);
+        dmlService.createStudent(student);
 
     }
 }

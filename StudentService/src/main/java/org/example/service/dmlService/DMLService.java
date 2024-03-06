@@ -3,6 +3,7 @@ package org.example.service.dmlService;
 import org.example.data.Student;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface DMLService {
@@ -29,5 +30,6 @@ public interface DMLService {
 
     public List<String> getAllSecondNames(Connection connection);
 
+    public void createStudent(Student student) throws SQLException;
     // .....
 }
