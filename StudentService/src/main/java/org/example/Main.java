@@ -67,7 +67,9 @@ public class Main {
 //        }
 
         Student student = new Student("Jack", "J", 115);
+        Student student1 = new Student("Tony", "S", 35);
         dmlService.createStudentInDB(student);
+        dmlService.createStudentInDB(student1);
 
     }
 }
