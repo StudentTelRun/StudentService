@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.component.dbConnection.impl.PGConnection;
 import org.example.component.dbConnection.impl.SQLiteConnection;
 import org.example.data.Student;
 import org.example.service.dmlService.DMLService;
@@ -53,7 +54,7 @@ public class Main {
         //и проверить что работаее
 //        PGConnection.getProperties("C:\\Users\\Cibermag\\IdeaProjects\\StudentService\\StudentService\\src\\main\\resources\\db.properties");
         DMLService dmlService = new DMLServiceImpl();
-        try (Connection connection = SQLiteConnection.INSTANCE.getDBConnection()){
+        try (Connection connection = PGConnection.INSTANCE.getDBConnection()){
             List<Student> allStudents = dmlService.getAllStudents(connection);
             allStudents.forEach(System.out::println);
             List<String> allnames = dmlService.getAllNames(connection);

@@ -14,7 +14,7 @@ public enum PGConnection implements DBConnection {
 
     private static Connection getPGInstance() throws SQLException {
         String url = "jdbc:postgresql://localhost:5432/postgres";
-        Properties props = new Properties();
+        Properties props = getProperties("StudentService/src/main/resources/db.properties");
 //        PGProperty.USER.set(props, "postgres");
 //        PGProperty.PASSWORD.set(props, "admin");
 //        PGProperty.ASSUME_MIN_SERVER_VERSION.set(props, "10");
@@ -25,7 +25,6 @@ public enum PGConnection implements DBConnection {
         return con;
     }
 
-    // TODO: 04.03.2024 Проверить закрытие потока
     //private static Properties getProperties(String namefile){
     public static Properties getProperties(String namefile) {
         Properties properties = new Properties();

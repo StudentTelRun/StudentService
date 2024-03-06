@@ -43,7 +43,7 @@ public class SpecificStudConvertor implements StudentConverter {
 
                     if ("name".equals(columnName)) {
                         student.setName((String) resultSet.getObject(i));
-                    } else if ("secondName".equals(columnName)) {
+                    } else if ("second_name".equals(columnName)) {
                         student.setSecondName((String) resultSet.getObject(i));
                     } else if ("age".equals(columnName)) {
                         student.setAge((Integer) resultSet.getObject(i));
