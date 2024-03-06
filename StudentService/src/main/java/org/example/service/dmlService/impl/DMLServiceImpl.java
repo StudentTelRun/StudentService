@@ -69,7 +69,7 @@ public class DMLServiceImpl implements DMLService {
             ResultSet resultSet = getResultSet(connection);
             List<String> secondNames = new ArrayList<>();
             while (resultSet.next()) {
-                String secondName = resultSet.getString("secondName");
+                String secondName = resultSet.getString("second_name");
                 secondNames.add(secondName);
             }
 
