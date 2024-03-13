@@ -12,16 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DMLServiceImpl implements DMLService {
-    public ResultSet getResultSet(Connection connection) throws SQLException {
+    public ResultSet getResultSet(Connection connection, String sqlQuery) throws SQLException {
         Statement statement = connection.createStatement();
 
-        return statement.executeQuery("SELECT * FROM student");
+        return statement.executeQuery(sqlQuery);
     }
 
     @Override
     public List<Integer> getAllAge(Connection connection) {
         try {
-            ResultSet resultSet = getResultSet(connection);
+            ResultSet resultSet = getResultSet(connection, "SELECT * FROM student");
             List<Integer> ages = new ArrayList<>();
             while (resultSet.next()) {
                 String age = resultSet.getString("age");
@@ -38,7 +38,7 @@ public class DMLServiceImpl implements DMLService {
     public List<Student> getAllStudents(Connection connection) {
         StudentConverter studentConverter = new SpecificStudConvertor();
         try {
-            ResultSet resultSet = getResultSet(connection);
+            ResultSet resultSet = getResultSet(connection, "SELECT * FROM student");
 
             return studentConverter.convertResultSetToStudents(resultSet);
         } catch (SQLException e) {
@@ -49,7 +49,7 @@ public class DMLServiceImpl implements DMLService {
     @Override
     public List<String> getAllNames(Connection connection) {
         try {
-            ResultSet resultSet = getResultSet(connection);
+            ResultSet resultSet = getResultSet(connection, "SELECT * FROM student");
             List<String> names = new ArrayList<>();
             while (resultSet.next()) {
                 String name = resultSet.getString("name");
@@ -65,7 +65,7 @@ public class DMLServiceImpl implements DMLService {
     @Override
     public List<String> getAllSecondNames(Connection connection) {
         try {
-            ResultSet resultSet = getResultSet(connection);
+            ResultSet resultSet = getResultSet(connection, "SELECT * FROM student");
             List<String> secondNames = new ArrayList<>();
             while (resultSet.next()) {
                 String secondName = resultSet.getString("second_name");
@@ -90,6 +90,25 @@ public class DMLServiceImpl implements DMLService {
 
             prepareStatement.executeUpdate();
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Student> findStudentByAgeName(String name, int age) {
+        try (Connection connection = SQLiteConnection.INSTANCE.getDBConnection()) {
+
+            String selectQuery = "SELECT * FROM student WHERE name = ? AND age = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
+            preparedStatement.setString(1, name);
+            preparedStatement.setInt(2, age);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            StudentConverter studentConverter = new SpecificStudConvertor();
+            List<Student> students = studentConverter.convertResultSetToStudents(resultSet);
+
+            return students;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

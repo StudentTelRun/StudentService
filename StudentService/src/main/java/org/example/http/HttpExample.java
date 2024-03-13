@@ -13,7 +13,6 @@ import org.example.service.dmlService.impl.DMLServiceImpl;
 import org.example.service.impl.SpecificStudConvertor;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
@@ -88,9 +87,35 @@ public class HttpExample {
             }
         });
 
+        server.createContext("/findStudent", new HttpHandler() {
+            @Override
+            public void handle(HttpExchange exchange) throws IOException {
+                if ("GET".equals(exchange.getRequestMethod())) {
+
+                    InputStreamReader isr = new InputStreamReader(exchange.getRequestBody(), "utf-8");
+                    Student student = objectMapper.readValue(isr, Student.class);
+                    List<Student> students = dmlService.findStudentByAgeName(student.getName(), student.getAge());
+
+                    String jsonResponse = objectMapper.writeValueAsString(students);
+
+                    exchange.getResponseHeaders().set("Content-Type", "application/json");
+                    exchange.sendResponseHeaders(200, jsonResponse.getBytes().length);
+                    try (OutputStream os = exchange.getResponseBody()) {
+                        os.write(jsonResponse.getBytes());
+                    }
+                } else {
+                    String response = "Only GET is supported";
+                    exchange.sendResponseHeaders(405, response.getBytes().length);
+                    try (OutputStream os = exchange.getResponseBody()) {
+                        os.write(response.getBytes());
+                    }
+                }
+            }
+        });
+
         // Запуск сервера
         server.start();
-        System.out.println("Сервер запущен на порту 8000. Используйте /getStudents для GET запросов и /createStudent для POST запросов.");
+        System.out.println("The server is running on port 8000. Use /getStudents for GET requests and /createStudent for POST requests.");
     }
 }
 
