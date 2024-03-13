@@ -31,4 +31,12 @@ public interface DMLService {
 
     public void createStudentInDB(Student student);
 
+    /**
+     * This method find Student by name and age and return List of found Student
+     * @param name String
+     * @param age int
+     * @return List<Student>
+     */
+    public List<Student> findStudentByAgeName(String name, int age);
+
 }
