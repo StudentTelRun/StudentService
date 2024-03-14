@@ -3,11 +3,15 @@ package org.example.service.dmlService.impl;
 import org.example.component.dbConnection.impl.PGConnection;
 import org.example.component.dbConnection.impl.SQLiteConnection;
 import org.example.data.Student;
+import org.example.data.dto.NameAgeDTO;
 import org.example.service.StudentConverter;
 import org.example.service.dmlService.DMLService;
 import org.example.service.impl.SpecificStudConvertor;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,4 +98,30 @@ public class DMLServiceImpl implements DMLService {
             throw new RuntimeException(e);
         }
     }
+
+
+    public List<Student> getStudentsByNameAndAge(Connection connection, NameAgeDTO nameAgeDTO) {
+        StudentConverter studentConverter = new SpecificStudConvertor();
+        List<Student>  studentsList = new ArrayList<>();
+
+        try {
+            String insertQuery = "SELECT * FROM student WHERE name=? AND age=?";
+            var prepareStatement = connection.prepareStatement(insertQuery);
+
+            prepareStatement.setString(1, nameAgeDTO.getName());
+            prepareStatement.setInt(2, nameAgeDTO.getAge());
+
+            ResultSet resultSet = prepareStatement.executeQuery();
+
+//            while (resultSet.next()){
+                studentsList = studentConverter.convertResultSetToStudents(resultSet);
+//            }
+
+            return studentsList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

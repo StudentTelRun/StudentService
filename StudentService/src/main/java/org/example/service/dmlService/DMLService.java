@@ -1,6 +1,7 @@
 package org.example.service.dmlService;
 
 import org.example.data.Student;
+import org.example.data.dto.NameAgeDTO;
 
 import java.sql.Connection;
 import java.util.List;
@@ -30,5 +31,7 @@ public interface DMLService {
     public List<String> getAllSecondNames(Connection connection);
 
     public void createStudentInDB(Student student);
+
+    public List<Student> getStudentsByNameAndAge(Connection connection, NameAgeDTO nameAgeDTO);
 
 }
