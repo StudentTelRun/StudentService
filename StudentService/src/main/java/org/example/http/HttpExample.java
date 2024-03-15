@@ -11,7 +11,6 @@ import org.example.service.StudentConverter;
 import org.example.service.dmlService.DMLService;
 import org.example.service.dmlService.impl.DMLServiceImpl;
 import org.example.service.impl.SpecificStudConvertor;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,6 +18,7 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.sql.Connection;
 import java.util.List;
+import java.util.SimpleTimeZone;
 
 public class HttpExample {
 
@@ -88,9 +88,32 @@ public class HttpExample {
             }
         });
 
+        server.createContext("/searchStudent", new HttpHandler() {
+            @Override
+            public void handle(HttpExchange exchange) throws IOException {
+                if ("GET".equals(exchange.getRequestMethod())){
+                    InputStreamReader inputStreamReader = new InputStreamReader(exchange.getRequestBody(),"utf-8");
+                    StudentDto studentDto = objectMapper.readValue(inputStreamReader, StudentDto.class);
+                    Student student = studentConverter.convertDTOToStudent(studentDto);
+                    dmlService.createStudentInDB(student);
+                    String responseJsn = objectMapper.writeValueAsString(student);
+                    exchange.sendResponseHeaders(200,responseJsn.getBytes().length);
+                    try(OutputStream os = exchange.getResponseBody()){
+                        os.write(responseJsn.getBytes());
+                    }
+                }else {
+                    String response = "Только POST метод разрешен";
+                    exchange.sendResponseHeaders(405,response.getBytes().length);
+                    try (OutputStream os = exchange.getResponseBody()){
+                        os.write(response.getBytes());
+                    }
+                }
+            }
+        });
+
         // Запуск сервера
         server.start();
-        System.out.println("Сервер запущен на порту 8000. Используйте /getStudents для GET запросов и /createStudent для POST запросов.");
+        System.out.println("Сервер запущен на порту 8000. Используйте /getStudents для GET запросов  /createStudent для POST запросов /searchStudent для GET запросов");
     }
 }
 

@@ -94,4 +94,9 @@ public class DMLServiceImpl implements DMLService {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public List<Student> searchStudentByNameAndAge(String name, Integer age) {
+        return null;
+    }
 }

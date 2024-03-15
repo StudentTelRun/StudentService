@@ -31,4 +31,6 @@ public interface DMLService {
 
     public void createStudentInDB(Student student);
 
+    public List<Student> searchStudentByNameAndAge(String name,Integer age);
+
 }
