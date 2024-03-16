@@ -28,6 +28,7 @@ public interface DMLService {
     public List<String> getAllNames(Connection connection);
 
     public List<String> getAllSecondNames(Connection connection);
+    public List<Student> findStudentByNameAndAge(String firstName, int age);
 
     public void createStudentInDB(Student student);
 

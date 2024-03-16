@@ -1,6 +1,5 @@
 package org.example.service.dmlService.impl;
 
-import org.example.component.dbConnection.impl.PGConnection;
 import org.example.component.dbConnection.impl.SQLiteConnection;
 import org.example.data.Student;
 import org.example.service.StudentConverter;
@@ -16,6 +15,20 @@ public class DMLServiceImpl implements DMLService {
         Statement statement = connection.createStatement();
 
         return statement.executeQuery("SELECT * FROM student");
+    }
+    //не пойму как сделать метод, чтобы потом передавать данные поиска через постман
+
+    @Override // метод для поиска студентов в заданым именем и айди
+    public List<Student> findStudentByNameAndAge(String firstName, int age){
+        List<Student> students = getAllStudents(SQLiteConnection.INSTANCE.getDBConnection());
+        List<Student> findingStudens = new ArrayList<>();
+        for (Student student: students){
+            if(student.getName().equals(firstName) && student.getAge()==age){
+                findingStudens.add(student);
+            }
+        }
+        return findingStudens;
+
     }
 
     @Override
